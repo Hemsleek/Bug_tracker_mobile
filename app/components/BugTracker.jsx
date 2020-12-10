@@ -1,8 +1,17 @@
 import React from 'react'
 import { StyleSheet, Text, View, Platform, TextInput,ScrollView } from 'react-native'
 import { AddIcon , BugIcon , DeleteIcon , CheckedIcon } from './icons/bugsIcon'
+import {useDispatch , useSelector} from 'react-redux'
 
 export default function BugTracker() {
+
+    const dispatch = useDispatch()
+    const bugs = useSelector( state => state)
+    const totalBugs = useSelector( state => state.length)
+
+    const unresolvedBugs = bugs.filter(bug => !bug.resolved)
+    const resolvedBugs = bugs.filter(bug => bug.resolved)
+
     return (
         <View style={styles.container}>
             <View style={styles.heading}>
@@ -36,9 +45,9 @@ export default function BugTracker() {
                 </ScrollView>
             </View>
             <View style={styles.info}>
-                <Text style={styles.infoTexts}>Total (67)</Text>
-                <Text style={[styles.infoTexts, styles.infoText]}>Unresolved (23)</Text>
-                <Text style={styles.infoTexts}>Resolved (20)</Text>
+                <Text style={styles.infoTexts}>Total ({totalBugs.length})</Text>
+                <Text style={[styles.infoTexts, styles.infoText]}>Unresolved ({unesolvedBugs.length})</Text>
+                <Text style={styles.infoTexts}>Resolved ({resolvedBugs.length})</Text>
             </View>
       </View>
     )
@@ -92,7 +101,6 @@ const styles = StyleSheet.create({
       },
       resolvedBugs:{},
       bugOption:{
-          textDecorationColor:'green',
           textDecorationStyle:'solid',
           textDecorationLine:'underline',
           fontSize:17,
