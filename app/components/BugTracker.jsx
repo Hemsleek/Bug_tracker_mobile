@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { StyleSheet, Text, View, Platform, TextInput,ScrollView } from 'react-native'
+import { StyleSheet, Text, View, Platform, TextInput,ScrollView, StatusBar } from 'react-native'
 import { AddIcon , BugIcon , DeleteIcon , CheckedIcon } from './icons/bugsIcon'
 import {addBug, removeBug, toggleResolveBug } from '../store/actionCreators'
 
@@ -19,7 +19,11 @@ export default function BugTracker() {
 
     const handleSubmit = () =>{
         const id = generateId()
-        dispatch(addBug(id , newBug))
+        const description = newBug.trim()
+         
+        if(!description) return null
+
+        dispatch(addBug(id , description))
         setNewBug('')
     }
 
@@ -51,7 +55,7 @@ export default function BugTracker() {
                                     </Text>
                                     <DeleteIcon  onPress={() => dispatch(removeBug(bug.id))} />
                                 </View>
-                                )): []
+                                )): (<Text style={styles.empty}>List Empty</Text>)
                         }
                         
                     </View>
@@ -68,7 +72,7 @@ export default function BugTracker() {
 
                                     <DeleteIcon  onPress={() => dispatch(removeBug(bug.id))} />
                                 </View>
-                                )):[]
+                                )):(<Text style={styles.empty}>List Empty</Text>)
                         }
                     </View>
                 </ScrollView>
@@ -167,7 +171,10 @@ const styles = StyleSheet.create({
         borderLeftWidth: 2, 
         borderStyle: 'solid',
         paddingHorizontal:8
+      },
+      empty:{
+          color:'gray',
+          marginLeft:5
       }
-     
-
+    
 })

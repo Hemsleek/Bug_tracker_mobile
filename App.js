@@ -10,9 +10,9 @@ import BugTracker from './app/components/BugTracker'
 
 export default function App() {
   return (
-    <Provider store={store}>
+    <Provider store={store} >
       <SafeAreaView style={{ flex: 1 }}>
-        <StatusBar backgroundColor='gray' barStyle="dark-content" />
+        <StatusBar backgroundColor='gray' barStyle="light-content" />
         <BugTracker />
       </SafeAreaView>
     </Provider>
