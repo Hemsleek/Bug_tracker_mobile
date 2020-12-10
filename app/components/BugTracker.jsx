@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { StyleSheet, Text, View, Platform, TextInput,ScrollView } from 'react-native'
 import { AddIcon , BugIcon , DeleteIcon , CheckedIcon } from './icons/bugsIcon'
-import {addBug} from '../store/actionCreators'
+import {addBug, removeBug, toggleResolveBug } from '../store/actionCreators'
 
 import {useDispatch , useSelector} from 'react-redux'
 
@@ -46,10 +46,10 @@ export default function BugTracker() {
                             unresolvedBugs.length?
                              (unresolvedBugs.map(bug =>
                                 <View key={bug.id} style={styles.bug}>
-                                    <BugIcon />
+                                    <BugIcon  onPress={() => dispatch(toggleResolveBug(bug.id))} />
                                     <Text  style={[styles.bugText , {color:'red'}]}>{bug.description}
                                     </Text>
-                                    <DeleteIcon />
+                                    <DeleteIcon  onPress={() => dispatch(removeBug(bug.id))} />
                                 </View>
                                 )): []
                         }
@@ -62,11 +62,11 @@ export default function BugTracker() {
                             resolvedBugs.length?
                              (resolvedBugs.map(bug =>
                                 <View key={bug.id} style={styles.bug}>
-                                    <CheckedIcon />
+                                    <CheckedIcon onPress={() => dispatch(toggleResolveBug(bug.id))} />
                                     <Text style={[styles.bugText , {color:'green'}]}>{bug.description}
                                     </Text>
 
-                                    <DeleteIcon />
+                                    <DeleteIcon  onPress={() => dispatch(removeBug(bug.id))} />
                                 </View>
                                 )):[]
                         }
