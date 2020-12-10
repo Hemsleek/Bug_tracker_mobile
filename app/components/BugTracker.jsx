@@ -1,9 +1,12 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { StyleSheet, Text, View, Platform, TextInput,ScrollView } from 'react-native'
 import { AddIcon , BugIcon , DeleteIcon , CheckedIcon } from './icons/bugsIcon'
+import {addBug} from '../store/actionCreators'
+
 import {useDispatch , useSelector} from 'react-redux'
 
 export default function BugTracker() {
+    const [newBug , setNewBug] = useState('')
 
     const dispatch = useDispatch()
     const bugs = useSelector( state => state)
@@ -11,6 +14,14 @@ export default function BugTracker() {
 
     const unresolvedBugs = bugs.filter(bug => !bug.resolved)
     const resolvedBugs = bugs.filter(bug => bug.resolved)
+
+    const generateId = () => Math.random().toString(36).substr(2,4)
+
+    const handleSubmit = () =>{
+        const id = generateId()
+        dispatch(addBug(id , newBug))
+        setNewBug('')
+    }
 
     return (
         <View style={styles.container}>
@@ -21,32 +32,50 @@ export default function BugTracker() {
                 <TextInput underlineColorAndroid='transparent' 
                 allowFontScaling={true} style={styles.formInput}
                 placeholder="Found a new bug?"
+                value={newBug}
+                onChangeText={setNewBug}
                 />
-                <AddIcon />
+                <AddIcon onPress={handleSubmit} />
             </View>
             <View style={styles.bugs}>
                 <ScrollView showsVerticalScrollIndicator={false} >
                     <View style={styles.unresolvedBugs}>
                         <Text style={styles.bugOption}>Unresolved</Text>
-                        <View style={styles.bug}>
-                            <BugIcon />
-                            <Text style={[styles.bugText , {color:'red'}]}>Astalavista 👾</Text>
-                            <DeleteIcon />
-                        </View>
+                       
+                        {
+                            unresolvedBugs.length?
+                             (unresolvedBugs.map(bug =>
+                                <View key={bug.id} style={styles.bug}>
+                                    <BugIcon />
+                                    <Text  style={[styles.bugText , {color:'red'}]}>{bug.description}
+                                    </Text>
+                                    <DeleteIcon />
+                                </View>
+                                )): []
+                        }
+                        
                     </View>
                     <View style={styles.resolvedBugs}>
                         <Text style={styles.bugOption}>Resolved</Text>
-                        <View style={styles.bug}>
-                            <CheckedIcon />
-                            <Text style={[styles.bugText , {color:'green'}]}>Hey babe,i'm chairman 😎</Text>
-                            <DeleteIcon />
-                        </View>
+                        
+                        {
+                            resolvedBugs.length?
+                             (resolvedBugs.map(bug =>
+                                <View key={bug.id} style={styles.bug}>
+                                    <CheckedIcon />
+                                    <Text style={[styles.bugText , {color:'green'}]}>{bug.description}
+                                    </Text>
+
+                                    <DeleteIcon />
+                                </View>
+                                )):[]
+                        }
                     </View>
                 </ScrollView>
             </View>
             <View style={styles.info}>
-                <Text style={styles.infoTexts}>Total ({totalBugs.length})</Text>
-                <Text style={[styles.infoTexts, styles.infoText]}>Unresolved ({unesolvedBugs.length})</Text>
+                <Text style={styles.infoTexts}>Total ({totalBugs})</Text>
+                <Text style={[styles.infoTexts, styles.infoText]}>Unresolved ({unresolvedBugs.length})</Text>
                 <Text style={styles.infoTexts}>Resolved ({resolvedBugs.length})</Text>
             </View>
       </View>
@@ -111,7 +140,7 @@ const styles = StyleSheet.create({
       bug:{
           flexDirection:'row',
           alignItems:'center',
-          marginBottom:8
+          marginBottom:20
 
       },
       bugText:{

@@ -5,7 +5,7 @@ const reducer = (state = [], action) => {
         case 'ADD_BUG':
             return state.concat({
                 id: action.payload.id,
-                description: action.paylaod.description,
+                description: action.payload.description,
                 resolved: false
             })
             break;
