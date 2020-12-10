@@ -26,8 +26,8 @@ export function AddIcon(props) {
 export function BugIcon(props) {
     return (
         <Svg
-            width={17}
-            height={17}
+            width={22}
+            height={22}
             viewBox="0 0 17 17"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -44,8 +44,8 @@ export function BugIcon(props) {
 export function DeleteIcon(props) {
     return (
         <Svg
-            width={18}
-            height={19}
+            width={20}
+            height={20}
             viewBox="0 0 18 19"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
@@ -65,8 +65,8 @@ export function DeleteIcon(props) {
 export function CheckedIcon(props) {
     return (
         <Svg
-            width={13}
-            height={9}
+            width={20}
+            height={16}
             viewBox="0 0 13 9"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
