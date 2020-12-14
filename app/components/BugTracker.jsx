@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { StyleSheet, Text, View, Platform, TextInput,ScrollView, StatusBar } from 'react-native'
+import { StyleSheet, Text, View, Platform, TextInput,ScrollView, StatusBar,TouchableNativeFeedback , TouchableOpacity } from 'react-native'
 import { AddIcon , BugIcon , DeleteIcon , CheckedIcon } from './icons/bugsIcon'
 import {addBug, removeBug, toggleResolveBug } from '../store/actionCreators'
 
@@ -16,6 +16,10 @@ export default function BugTracker() {
     const resolvedBugs = bugs.filter(bug => bug.resolved)
 
     const generateId = () => Math.random().toString(36).substr(2,4)
+
+    const Touchable =
+            Platform.OS === "android" ? TouchableNativeFeedback : TouchableOpacity;
+
 
     const handleSubmit = () =>{
         const id = generateId()
@@ -49,8 +53,11 @@ export default function BugTracker() {
                         {
                             unresolvedBugs.length?
                              (unresolvedBugs.map(bug =>
+                            
                                 <View key={bug.id} style={styles.bug}>
-                                    <BugIcon  onPress={() => dispatch(toggleResolveBug(bug.id))} />
+                                    <Touchable>
+                                        <BugIcon  onPress={() => dispatch(toggleResolveBug(bug.id))} />
+                                    </Touchable>
                                     <Text  style={[styles.bugText , {color:'red'}]}>{bug.description}
                                     </Text>
                                     <DeleteIcon  onPress={() => dispatch(removeBug(bug.id))} />
@@ -93,7 +100,7 @@ const styles = StyleSheet.create({
         padding: Platform.OS == 'andriod' ? StatusBar.currentHeight : 0
       },
       heading: {
-        backgroundColor: 'green',
+        backgroundColor: '#000',
         paddingVertical: 25,
         paddingLeft: 15,
         borderBottomColor: 'gray',
