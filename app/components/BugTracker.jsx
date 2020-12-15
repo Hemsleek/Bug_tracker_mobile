@@ -55,12 +55,15 @@ export default function BugTracker() {
                              (unresolvedBugs.map(bug =>
                             
                                 <View key={bug.id} style={styles.bug}>
-                                    <Touchable>
+                                    <Touchable style={styles.touchable}>
                                         <BugIcon  onPress={() => dispatch(toggleResolveBug(bug.id))} />
                                     </Touchable>
                                     <Text  style={[styles.bugText , {color:'red'}]}>{bug.description}
                                     </Text>
-                                    <DeleteIcon  onPress={() => dispatch(removeBug(bug.id))} />
+                                    <Touchable style={styles.touchable}>
+                                        <DeleteIcon  onPress={() => dispatch(removeBug(bug.id))} />
+                                    </Touchable>
+
                                 </View>
                                 )): (<Text style={styles.empty}>List Empty</Text>)
                         }
@@ -73,11 +76,16 @@ export default function BugTracker() {
                             resolvedBugs.length?
                              (resolvedBugs.map(bug =>
                                 <View key={bug.id} style={styles.bug}>
-                                    <CheckedIcon onPress={() => dispatch(toggleResolveBug(bug.id))} />
+                                    <Touchable style={styles.touchable}>
+                                        <CheckedIcon onPress={() => dispatch(toggleResolveBug(bug.id))} />
+                                    </Touchable>
+
                                     <Text style={[styles.bugText , {color:'green'}]}>{bug.description}
                                     </Text>
 
-                                    <DeleteIcon  onPress={() => dispatch(removeBug(bug.id))} />
+                                    <Touchable style={styles.touchable}>
+                                        <DeleteIcon  onPress={() => dispatch(removeBug(bug.id))} />
+                                    </Touchable>
                                 </View>
                                 )):(<Text style={styles.empty}>List Empty</Text>)
                         }
@@ -182,6 +190,10 @@ const styles = StyleSheet.create({
       empty:{
           color:'gray',
           marginLeft:5
+      },
+      touchable: {
+          padding:30,
+
       }
     
 })
