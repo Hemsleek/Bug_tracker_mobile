@@ -55,13 +55,18 @@ export default function BugTracker() {
                              (unresolvedBugs.map(bug =>
                             
                                 <View key={bug.id} style={styles.bug}>
-                                    <Touchable style={styles.touchable}>
-                                        <BugIcon  onPress={() => dispatch(toggleResolveBug(bug.id))} />
+                                    <Touchable 
+                                      onPress={() => dispatch(toggleResolveBug(bug.id))}
+                                     style={styles.touchable}>
+                                        <BugIcon />
                                     </Touchable>
                                     <Text  style={[styles.bugText , {color:'red'}]}>{bug.description}
                                     </Text>
-                                    <Touchable style={styles.touchable}>
-                                        <DeleteIcon  onPress={() => dispatch(removeBug(bug.id))} />
+                                    
+                                    <Touchable
+                                     onPress={() => dispatch(removeBug(bug.id))} 
+                                     style={styles.touchable}>
+                                        <DeleteIcon />
                                     </Touchable>
 
                                 </View>
@@ -76,15 +81,19 @@ export default function BugTracker() {
                             resolvedBugs.length?
                              (resolvedBugs.map(bug =>
                                 <View key={bug.id} style={styles.bug}>
-                                    <Touchable style={styles.touchable}>
-                                        <CheckedIcon onPress={() => dispatch(toggleResolveBug(bug.id))} />
+                                    <Touchable
+                                      onPress={() => dispatch(toggleResolveBug(bug.id))} 
+                                     style={styles.touchable}>
+                                        <CheckedIcon />
                                     </Touchable>
 
                                     <Text style={[styles.bugText , {color:'green'}]}>{bug.description}
                                     </Text>
 
-                                    <Touchable style={styles.touchable}>
-                                        <DeleteIcon  onPress={() => dispatch(removeBug(bug.id))} />
+                                    <Touchable  
+                                     onPress={() => dispatch(removeBug(bug.id))}  
+                                     style={styles.touchable} >
+                                        <DeleteIcon  />
                                     </Touchable>
                                 </View>
                                 )):(<Text style={styles.empty}>List Empty</Text>)
